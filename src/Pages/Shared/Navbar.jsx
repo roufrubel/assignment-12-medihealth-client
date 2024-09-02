@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useAdmin from "../../hooks/useAdmin";
 // import logo from "../../assets/mediHealth.png"
 import { MdOutlineHealthAndSafety } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
 
 
 const Navbar = () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
       <li><Link to="/shop">Shop</Link></li>
       <li>
       <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn btn-xs">Languages</div>
+        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn btn-xs">Languages<IoIosArrowDown></IoIosArrowDown></div>
         <ul
           tabIndex={0}
           className="menu dropdown-content bg-base-100 rounded-box z-[1] mt-32 p-4 shadow text-black">
@@ -48,7 +49,7 @@ const Navbar = () => {
       <li><Link to="/dashboard/cart">
       <button className="btn btn-xs">
       <FaCartPlus />
-  <div className="badge badge-secondary">+{cart.length}</div>
+  <div className="badge badge-warning">+{cart.length}</div>
 </button>
       </Link></li>    
       {/* {
@@ -88,7 +89,7 @@ const Navbar = () => {
     <div className="flex items-center">
     {/* <img className="h-6 w-6" src={logo} alt="mediHealth" /> */}
     
-    <a className="btn btn-ghost text-xl text-blue-600 font-bold">
+    <a className="btn btn-ghost text-xl  font-bold">
       <MdOutlineHealthAndSafety className="text-blue-600 text-2xl"></MdOutlineHealthAndSafety>mediHealth</a>
     </div>
   </div>
@@ -148,7 +149,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/login">
-              <button className="btn">Join Us</button>
+              <button className="btn btn-xs btn-warning font-bold">Join Us</button>
             </Link>
           </>
         )}
