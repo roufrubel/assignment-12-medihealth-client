@@ -49,7 +49,7 @@ const Navbar = () => {
       <li><Link to="/dashboard/cart">
       <button className="btn btn-xs">
       <FaCartPlus />
-  <div className="badge badge-warning">+{cart.length}</div>
+  <div className="badge badge-info">+{cart.length}</div>
 </button>
       </Link></li>    
       {/* {
@@ -126,7 +126,7 @@ const Navbar = () => {
         <li className="bg-slate-100 rounded-lg">
           <Link to="/dashboard" className="text-center">Dashboard</Link>
           </li>
-        <li><button onClick={handleSignOut} className="btn btn-xs">
+        <li><button onClick={handleSignOut} className="btn btn-xs btn-info font-bold">
               Log Out
             </button></li>
       </ul>
@@ -149,7 +149,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/login">
-              <button className="btn btn-xs btn-warning font-bold">Join Us</button>
+              <button className="btn btn-xs btn-info font-bold">Join Us</button>
             </Link>
           </>
         )}

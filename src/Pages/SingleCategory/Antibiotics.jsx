@@ -1,15 +1,16 @@
-import { GrView } from "react-icons/gr";
-import useMedicine from "../../hooks/useMedicine";
-import { Link } from "react-router-dom";
-import Navbar from "../Shared/Navbar";
+import React from 'react';
+import useMedicine from '../../hooks/useMedicine';
+import Navbar from '../Shared/Navbar';
+import { Link } from 'react-router-dom';
+import { GrView } from 'react-icons/gr';
 
-
-const Shop = () => {
+const Antibiotics = () => {
     const [medicine, loading] = useMedicine();
     if(loading){
         <progress className="progress w-56"></progress>
     }
-
+    const antibiotics = medicine.filter(md => md.category === "Antibiotics")
+    
 
     return (
         <>
@@ -17,9 +18,9 @@ const Shop = () => {
         <Navbar></Navbar>
         </div>
         <div className="pt-20">
-            <h2>All category medicine</h2>
+            <h2 className="font-bold text-info text-xl py-4">Antibiotics medicines</h2>
             <div className="overflow-x-auto">
-        <table className="table table-xs ">
+            <table className="table table-xs ">
           <thead>
             <tr>
               <th>Name</th>
@@ -30,7 +31,7 @@ const Shop = () => {
             </tr>
           </thead>
           <tbody>
-            {medicine.map((data) => (
+            {antibiotics.map((data) => (
                 <tr key={data._id}>
                   <td className="font-bold">{data?.name}</td>
                   <td>{data?.category}</td>
@@ -62,4 +63,4 @@ const Shop = () => {
     );
 };
 
-export default Shop;
+export default Antibiotics;

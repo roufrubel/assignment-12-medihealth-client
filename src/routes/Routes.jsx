@@ -13,6 +13,12 @@ import Cart from "../Pages/Dashboard/Cart";
 import Login from "../Pages/Login/Login";
 import UpdateProfile from "../Pages/UpdateProfile/UpdateProfile";
 import SignUp from "../Pages/SignUp/SignUp";
+import PainRelief from "../Pages/SingleCategory/PainRelief";
+import Antibiotics from "../Pages/SingleCategory/Antibiotics";
+import AllergyRelief from "../Pages/SingleCategory/AllergyRelief";
+import DigestiveHealth from "../Pages/SingleCategory/DigestiveHealth";
+import ColdFlu from "../Pages/SingleCategory/ColdFlu";
+import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
 // import Cart from "../pages/Dashboard/Cart/Cart";
 // import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 // import AddItems from "../pages/Dashboard/AddItems/AddItems";
@@ -40,6 +46,30 @@ export const router = createBrowserRouter([
       {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "painRelief",
+        element: <PainRelief></PainRelief>,
+      },
+      {
+        path: "antibiotics",
+        element: <Antibiotics></Antibiotics>,
+      },
+      {
+        path: "allergyRelief",
+        element: <AllergyRelief></AllergyRelief>,
+      },
+      {
+        path: "digestiveHealth",
+        element: <DigestiveHealth></DigestiveHealth>,
+      },
+      {
+        path: "coldFlu",
+        element: <ColdFlu></ColdFlu>,
+      },
+      {
+        path: "vitaminsSupplements",
+        element: <VitaminsSupplements></VitaminsSupplements>
       },
 
       // {
