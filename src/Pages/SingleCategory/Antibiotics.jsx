@@ -14,10 +14,8 @@ const Antibiotics = () => {
 
     return (
         <>
-        <div className="mt-0">
-        <Navbar></Navbar>
-        </div>
-        <div className="pt-20">
+        
+        <div className="pt-20 px-10">
             <h2 className="font-bold text-info text-xl py-4">Antibiotics medicines</h2>
             <div className="overflow-x-auto">
             <table className="table table-xs ">

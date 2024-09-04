@@ -19,6 +19,7 @@ import AllergyRelief from "../Pages/SingleCategory/AllergyRelief";
 import DigestiveHealth from "../Pages/SingleCategory/DigestiveHealth";
 import ColdFlu from "../Pages/SingleCategory/ColdFlu";
 import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
+// import ViewDetails from "../components/ViewDetails";
 // import Cart from "../pages/Dashboard/Cart/Cart";
 // import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 // import AddItems from "../pages/Dashboard/AddItems/AddItems";
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
         path: "shop",
         element: <Shop></Shop>,
       },
+      // {
+      //   path: "medicine/:id",
+      //   element: <ViewDetails></ViewDetails>
+      // },
       {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,

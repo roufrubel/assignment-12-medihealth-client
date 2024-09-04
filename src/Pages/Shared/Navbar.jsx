@@ -29,17 +29,7 @@ const Navbar = () => {
     const navbarMenus = <>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/shop">Shop</Link></li>
-      <li>
-      <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn btn-xs">Languages<IoIosArrowDown></IoIosArrowDown></div>
-        <ul
-          tabIndex={0}
-          className="menu dropdown-content bg-base-100 rounded-box z-[1] mt-32 p-4 shadow text-black">
-          <li><a>English</a></li>
-          <li><a>Bangla</a></li>
-        </ul>
-      </div>
-      </li>
+      
       {
         user && isAdmin && <li><Link to="/dashboard/adminHome">Admin home page</Link></li>
       }    
@@ -47,11 +37,23 @@ const Navbar = () => {
         user && !isAdmin && <li><Link to="/dashboard/userHome">User home page</Link></li>
       }    
       <li><Link to="/dashboard/cart">
-      <button className="btn btn-xs">
+      <button className="btn md:btn-xs lg:btn-xs ">
       <FaCartPlus />
   <div className="badge badge-info">+{cart.length}</div>
 </button>
-      </Link></li>    
+      </Link></li> 
+
+      <li>
+      <div className="dropdown dropdown-end">
+        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn btn-xs">Languages<IoIosArrowDown></IoIosArrowDown></div>
+        <ul
+          tabIndex={0}
+          className="menu dropdown-content bg-base-100 rounded-box z-[1] -mr-10 mt-36 p-4 shadow text-black">
+          <li><a>English</a></li>
+          <li><a>Bangla</a></li>
+        </ul>
+      </div>
+      </li>   
       {/* {
       user ?  <> 
       <button onClick={handleLogOut} >Log Out</button></> : <><li><Link className="btn btn-outline"  to="/login">Join Us </Link></li> </>
@@ -61,7 +63,7 @@ const Navbar = () => {
 
     return (
         <>
-        <div className="navbar bg-opacity-30 text-white fixed z-10 max-w-screen-xl	 bg-black">
+        <div className="navbar bg-opacity-80 text-white fixed z-10 px-10	 bg-black">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -80,7 +82,7 @@ const Navbar = () => {
       </div>
       <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-4 text-black shadow">
         {
             navbarMenus
         }
@@ -89,8 +91,8 @@ const Navbar = () => {
     <div className="flex items-center">
     {/* <img className="h-6 w-6" src={logo} alt="mediHealth" /> */}
     
-    <a className="btn btn-ghost text-xl  font-bold">
-      <MdOutlineHealthAndSafety className="text-blue-600 text-2xl"></MdOutlineHealthAndSafety>mediHealth</a>
+    <a className="btn btn-ghost text-xl  font-bold uppercase text-info">
+      <MdOutlineHealthAndSafety className="text-info text-2xl"></MdOutlineHealthAndSafety>mediHealth</a>
     </div>
   </div>
   <div className="navbar-center hidden lg:flex">

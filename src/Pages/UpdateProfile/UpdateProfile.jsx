@@ -35,7 +35,7 @@ const UpdateProfile = () => {
             }
 
     return (
-        <div>
+        <div className="px-10">
           <Helmet>
                 <title>Update Profile |  mediHealth</title>
             </Helmet>
