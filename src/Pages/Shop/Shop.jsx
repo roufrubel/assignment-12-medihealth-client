@@ -1,26 +1,97 @@
 import { GrView } from "react-icons/gr";
 import useMedicine from "../../hooks/useMedicine";
 import "./Shop.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
+import Swal from "sweetalert2";
 
 const Shop = () => {
   const [medicine, loading] = useMedicine();
+  const [viewDetails, setViewDetails] = useState(null);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const {user} = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const axiosSecure = useAxiosSecure();
+  const [ , refetch] = useCart();
+
+ 
+  // const openModal = (data) => {
+  //   setSelectedMedicine(data);
+  //   document.getElementById("medihealth-modal").showModal();
+  // };
+
+  useEffect(() => {
+    if(viewDetails){
+      document.getElementById("medihealth-modal").showModal();
+    }
+  }, [viewDetails]);
+
+  const closeModal = () => {
+    setViewDetails(null);
+    document.getElementById("medihealth-modal").close();
+  };
+
+
+  // handle select
+  const handleSelect = (selectedMedicine) => {
+    // Check if selectedMedicine is null or undefined
+  if (!selectedMedicine) {
+    console.error("No medicine selected.");
+    return;
+  }
+
+    if(user && user.email){
+       // destructuring from selectedMedicine
+       const { _id, name, image, price, category } = selectedMedicine;
+      // send selected medicine cart to db
+      const cartItem = {
+        medicineId: _id,
+        email: user.email,
+        name,
+        image,
+        price,
+        category
+      }
+      axiosSecure.post('/carts', cartItem)
+      .then(res => {
+        console.log(res.data)
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} has been selected`,
+            showConfirmButton: false,
+            timer: 1000
+          });
+          // refetch the cart data to update cart count
+          refetch();
+        }
+      })
+    } else{
+      Swal.fire({
+        title: "You are not logged in?",
+        text: "Please login to add the cart !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, login"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // send user to the login page
+          navigate('/login', {state: {from: location}});
+        }
+      });
+    }
+  }
 
   if (loading) {
     <progress className="progress w-56"></progress>;
   }
-  
- 
-  const openModal = (data) => {
-    setSelectedMedicine(data);
-    document.getElementById("medihealth-modal").showModal();
-  };
-
-  const closeModal = () => {
-    setSelectedMedicine(null);
-    document.getElementById("medihealth-modal").close();
-  };
 
 
   return (
@@ -51,29 +122,28 @@ const Shop = () => {
                   <td>
                       <button
                         className="btn btn-circle btn-sm btn-outline font-bold btn-info"
-                        onClick={() => openModal(data)}
+                        onClick={() => setViewDetails(data)}
                       >
                         <GrView />
                       </button>
-
                     {
-                      selectedMedicine && (
+                      viewDetails && (
                         <dialog
                       id="medihealth-modal"
                       className="modal modal-bottom sm:modal-middle"
                     >
                       <div className="modal-box">
-                          <img className="w-1/2" src={selectedMedicine.image} alt="" />
+                          <img className="w-1/2" src={viewDetails.image} alt="" />
                           <h3 className="font-bold text-info text-lg py-2">
-                            {selectedMedicine.name}
+                            {viewDetails.name}
                           </h3>
                           <div className="flex justify-start gap-4 font-bold mb-3">
-                            <p>{selectedMedicine.category}</p>
-                            <p>{selectedMedicine.quantity}</p>
-                            <p>{selectedMedicine.dosage}</p>
-                            <p>${selectedMedicine.price}</p>
+                            <p>{viewDetails.category}</p>
+                            <p>{viewDetails.quantity}</p>
+                            <p>{viewDetails.dosage}</p>
+                            <p>${viewDetails.price}</p>
                           </div>
-                          <p>{selectedMedicine.short_description}</p>
+                          <p>{viewDetails.short_description}</p>
                         <div className="modal-action">
                           <form method="dialog">
                             <button className="btn btn-sm btn-circle btn-info absolute right-2 top-2"
@@ -91,7 +161,7 @@ const Shop = () => {
 
                   <td>
                     <button
-                      onClick={() => handleConfirm(data?._id)}
+                      onClick={() => handleSelect(data)}
                       className="btn btn-xs btn-info font-bold"
                     >
                       Select

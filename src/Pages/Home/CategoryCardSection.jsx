@@ -13,7 +13,7 @@ const CategoryCardSection = () => {
     if(loading){
         <progress className="progress w-56"></progress>
     }
-    console.log(medicine)
+    // console.log(medicine)
     const painRelief = medicine.filter(md => md.category === "Pain Relief")
     const antibiotics = medicine.filter(md => md.category === "Antibiotics")
     const allergyRelief = medicine.filter(md => md.category === "Allergy Relief")

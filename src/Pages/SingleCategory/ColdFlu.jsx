@@ -1,15 +1,27 @@
-import React from 'react';
+
 import useMedicine from '../../hooks/useMedicine';
-import Navbar from '../Shared/Navbar';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { GrView } from 'react-icons/gr';
 
 const ColdFlu = () => {
     const [medicine, loading] = useMedicine();
+    const [selectedMedicine, setSelectedMedicine] = useState(null);
+    const coldFlu = medicine.filter(md => md.category === "Cold & Flu")
+
+    useEffect(() => {
+      if(selectedMedicine){
+        document.getElementById("medihealth-modal").showModal();
+      }
+    }, [selectedMedicine]);
+  
+    const closeModal = () => {
+      setSelectedMedicine(null);
+      document.getElementById("medihealth-modal").close();
+    };
+
     if(loading){
         <progress className="progress w-56"></progress>
     }
-    const coldFlu = medicine.filter(md => md.category === "Cold & Flu")
 
     return (
         <>
@@ -33,13 +45,46 @@ const ColdFlu = () => {
                   <td className="font-bold">{data?.name}</td>
                   <td>{data?.category}</td>
                   <td>${data?.price}</td>
-                {/* view */}
-                  <td>
-                  <Link to={`/medicine/${data._id}`}>
-                      <button className="btn btn-circle btn-sm btn-outline font-bold btn-info">
+               {/* view */}
+               <td>
+                      <button
+                        className="btn btn-circle btn-sm btn-outline font-bold btn-info"
+                        onClick={() => setSelectedMedicine(data)}
+                      >
                         <GrView />
                       </button>
-                    </Link>
+
+                    {
+                      selectedMedicine && (
+                        <dialog
+                      id="medihealth-modal"
+                      className="modal modal-bottom sm:modal-middle"
+                    >
+                      <div className="modal-box">
+                          <img className="w-1/2" src={selectedMedicine.image} alt="" />
+                          <h3 className="font-bold text-info text-lg py-2">
+                            {selectedMedicine.name}
+                          </h3>
+                          <div className="flex justify-start gap-4 font-bold mb-3">
+                            <p>{selectedMedicine.category}</p>
+                            <p>{selectedMedicine.quantity}</p>
+                            <p>{selectedMedicine.dosage}</p>
+                            <p>${selectedMedicine.price}</p>
+                          </div>
+                          <p>{selectedMedicine.short_description}</p>
+                        <div className="modal-action">
+                          <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-info absolute right-2 top-2"
+                            onClick={closeModal}
+                            >
+                              ✕
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>
+                      )
+                    }
                   </td>
                  
                   <td>
