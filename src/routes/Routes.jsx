@@ -1,15 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../Pages/Home/Home";
-// import Menu from "../pages/Menu/Menu/Menu";
-// import Order from "../pages/Order/Order";
-// import Login from "../pages/Login/Login";
-// import SignUp from "../pages/SignUp/SignUp";
-// import Secret from "../pages/Secret/Secret";
-// import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Dashboard from "../layout/Dashboard";
 import Shop from "../Pages/Shop/Shop";
-import Cart from "../Pages/Dashboard/Cart";
 import Login from "../Pages/Login/Login";
 import UpdateProfile from "../Pages/UpdateProfile/UpdateProfile";
 import SignUp from "../Pages/SignUp/SignUp";
@@ -19,17 +12,8 @@ import AllergyRelief from "../Pages/SingleCategory/AllergyRelief";
 import DigestiveHealth from "../Pages/SingleCategory/DigestiveHealth";
 import ColdFlu from "../Pages/SingleCategory/ColdFlu";
 import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
-// import ViewDetails from "../components/ViewDetails";
-// import Cart from "../pages/Dashboard/Cart/Cart";
-// import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
-// import AddItems from "../pages/Dashboard/AddItems/AddItems";
-// import AdminRoute from "./AdminRoute/AdminRoute";
-// import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
-// import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
-// import Payment from "../pages/Dashboard/Payment/Payment";
-// import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
-// import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
-// import UserHome from "../pages/Dashboard/UserHome/UserHome";
+import Cart from "../Pages/Dashboard/Cart";
+import UserHome from "../Pages/Dashboard/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -44,10 +28,6 @@ export const router = createBrowserRouter([
         path: "shop",
         element: <Shop></Shop>,
       },
-      // {
-      //   path: "medicine/:id",
-      //   element: <ViewDetails></ViewDetails>
-      // },
       {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,
@@ -114,12 +94,12 @@ export const router = createBrowserRouter([
     //   // normal user routes
       {
         path: "cart",
-        element: <Cart></Cart>,
+        element: <Cart></Cart>
       },
-    //   {
-    //     path: "userHome",
-    //     element: <UserHome></UserHome>,
-    //   },
+      {
+        path: "userHome",
+        element: <UserHome></UserHome>,
+      },
     //   {
     //     path: "payment",
     //     element: <Payment></Payment>,

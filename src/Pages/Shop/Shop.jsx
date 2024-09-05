@@ -54,7 +54,8 @@ const Shop = () => {
         name,
         image,
         price,
-        category
+        category,
+        quantity: 1
       }
       axiosSecure.post('/carts', cartItem)
       .then(res => {

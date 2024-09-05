@@ -1,10 +1,9 @@
 
 import { Link } from "react-router-dom";
-import { FaCartPlus } from "react-icons/fa6";
+import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../hooks/useCart";
 import useAuth from "../../hooks/useAuth";
 import useAdmin from "../../hooks/useAdmin";
-// import logo from "../../assets/mediHealth.png"
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -31,14 +30,15 @@ const Navbar = () => {
       <li><Link to="/shop">Shop</Link></li>
       
       {
-        user && isAdmin && <li><Link to="/dashboard/adminHome">Admin home page</Link></li>
+        user && isAdmin && <li><Link to="/dashboard/adminHome">Dashboard</Link></li>
       }    
       {
-        user && !isAdmin && <li><Link to="/dashboard/userHome">User home page</Link></li>
+        user && !isAdmin && <li><Link to="/dashboard/userHome">Dashboard</Link></li>
       }    
+      
       <li><Link to="/dashboard/cart">
       <button className="btn md:btn-xs lg:btn-xs ">
-      <FaCartPlus />
+      <FaShoppingCart ></FaShoppingCart>
   <div className="badge badge-info">+{cart.length}</div>
 </button>
       </Link></li> 

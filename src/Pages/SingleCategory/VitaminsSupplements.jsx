@@ -93,7 +93,7 @@ const VitaminsSupplements = () => {
         <>
         
         <div className="pt-20 px-10">
-            <h2 className="font-bold text-info text-xl py-4">Vitamins Supplements medicines</h2>
+            <h2 className="font-bold text-info text-xl py-4">Vitamins &  Supplements medicines</h2>
             <div className="overflow-x-auto">
             <table className="table table-xs ">
           <thead>
