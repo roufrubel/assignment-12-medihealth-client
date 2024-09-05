@@ -14,6 +14,7 @@ import ColdFlu from "../Pages/SingleCategory/ColdFlu";
 import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
 import Cart from "../Pages/Dashboard/Cart";
 import UserHome from "../Pages/Dashboard/UserHome";
+import Payment from "../Pages/Dashboard/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -100,10 +101,10 @@ export const router = createBrowserRouter([
         path: "userHome",
         element: <UserHome></UserHome>,
       },
-    //   {
-    //     path: "payment",
-    //     element: <Payment></Payment>,
-    //   },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
     //   {
     //     path: "paymentHistory",
     //     element: <PaymentHistory></PaymentHistory>,

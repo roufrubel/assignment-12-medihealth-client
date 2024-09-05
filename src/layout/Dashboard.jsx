@@ -17,7 +17,7 @@ const Dashboard = () => {
 
       <div className="flex">
         {/* dashboard sidebar */}
-        <div className="w-64 min-h-screen bg-neutral text-neutral-content">
+        <div className="w-64 min-h-screen bg-neutral text-neutral-content pt-16">
         <ul className="menu">
           {
             isAdmin ?
