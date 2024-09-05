@@ -110,10 +110,6 @@ export const router = createBrowserRouter([
         path: "invoice",
         element: <Invoice></Invoice>,
       },
-    //   {
-    //     path: "paymentHistory",
-    //     element: <PaymentHistory></PaymentHistory>,
-    //   },
 
     //   // Admin only routes
     //   {

@@ -32,8 +32,8 @@ const Invoice = () => {
         </address>
         </div>
         <div className="divider"></div>
-      <div className="mb-6 mt-8 space-y-1">
-      <h2 className="text-lg font-bold mb-4 uppercase">Invoice</h2>
+      <div className="mb-4 mt-4 space-y-1">
+      <h2 className="text-lg font-bold mb-2 uppercase">Invoice</h2>
       <p>
         <strong>Transaction ID:</strong> {payment.transactionId}
       </p>
