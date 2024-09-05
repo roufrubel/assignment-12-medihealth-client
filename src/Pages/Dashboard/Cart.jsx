@@ -79,14 +79,14 @@ const handleIncrease = (id) => {
     <div className="pt-4">
       <div className="flex justify-evenly mb-2 bg-slate-100 p-2 rounded-lg">
         <div>
-          <h2 className="text-2xl text-info">Items: {cart.length}</h2>
+          <h2 className="text-md text-info font-bold">Total Orders: {cart.length}</h2>
         </div>
         <div>
-          <h2 className="text-2xl text-info">Total Price: {totalPrice}</h2>
+          <h2 className="text-md text-info font-bold">Grand Total Price: {totalPrice}</h2>
         </div>
         {cart.length?<Link to="/dashboard/payment">
-        <button className="btn btn-info btn-sm">Pay</button>
-        </Link>: <button disabled className="btn btn-info btn-sm">Pay</button>}
+        <button className="btn btn-info btn-sm">Proceed to Checkout</button>
+        </Link>: <button disabled className="btn btn-info btn-sm">Proceed to Checkout</button>}
       </div>
 
       <div className="overflow-x-auto">

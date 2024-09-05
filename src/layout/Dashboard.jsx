@@ -1,8 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useCart from "../hooks/useCart";
-import Navbar from "../Pages/Shared/Navbar";
-import { FaCartPlus, FaHome } from "react-icons/fa";
+// import Navbar from "../Pages/Shared/Navbar";
+import { FaCartPlus, FaHome, FaSearch } from "react-icons/fa";
 
 const Dashboard = () => {
   const [cart] = useCart();
@@ -11,13 +11,13 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="pb-[64px] lg:pb-[72px]">
+      {/* <div className="pb-[64px] lg:pb-[72px]">
         <Navbar></Navbar>
-      </div>
+      </div> */}
 
       <div className="flex">
         {/* dashboard sidebar */}
-        <div className="w-64 min-h-screen bg-neutral text-neutral-content pt-16">
+        <div className="md:w-44 lg:w-44 min-h-screen bg-neutral text-neutral-content pt-16">
         <ul className="menu">
           {
             isAdmin ?
@@ -42,6 +42,18 @@ const Dashboard = () => {
           </li>
             </>
           }
+          {/* shared dashboard menus */}
+          <div className="divider my-4 divider-info"></div>
+          <li>
+            <NavLink to="/">
+              <FaHome />Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/shop">
+              <FaSearch />Shop
+            </NavLink>
+          </li>
         </ul>
         </div>
 

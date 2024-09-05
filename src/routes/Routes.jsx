@@ -15,6 +15,7 @@ import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
 import Cart from "../Pages/Dashboard/Cart";
 import UserHome from "../Pages/Dashboard/UserHome";
 import Payment from "../Pages/Dashboard/Payment";
+import Invoice from "../Pages/Dashboard/Invoice";
 
 export const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payment></Payment>,
+      },
+      {
+        path: "invoice",
+        element: <Invoice></Invoice>,
       },
     //   {
     //     path: "paymentHistory",
