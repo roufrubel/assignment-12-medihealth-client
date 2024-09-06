@@ -15,7 +15,7 @@ const Navbar = () => {
     <p>Loading...</p>;
   }
 
-  console.log(user);
+  // console.log(user);
 
   const handleSignOut = () => {
     logOut()

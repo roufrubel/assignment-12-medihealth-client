@@ -1,4 +1,5 @@
 import { MdOutlineHealthAndSafety } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -41,9 +42,11 @@ const Footer = () => {
         </fieldset>
       </form>
     </footer>
-        <div className="bg-neutral text-neutral-content py-6 text-xl font-bold px-10">
-        <h2 className="flex items-center"><MdOutlineHealthAndSafety className="text-blue-600 text-xl mr-1"></MdOutlineHealthAndSafety>mediHealth</h2>
+        <Link to="/">
+        <div className="bg-neutral text-neutral-content pb-10 text-xl font-bold px-10">
+        <h2 className="flex items-center text-info uppercase"><MdOutlineHealthAndSafety className=" text-2xl mr-1"></MdOutlineHealthAndSafety>mediHealth</h2>
         </div>
+        </Link>
     </>
     );
 };

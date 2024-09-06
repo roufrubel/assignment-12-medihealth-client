@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin";
@@ -10,6 +10,8 @@ const SignUp = () => {
   const axiosPublic = useAxiosPublic();
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -32,7 +34,7 @@ const SignUp = () => {
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              console.log('user added to db')
+              // console.log('user added to db')
               reset();
               Swal.fire({
                 position: "top-end",
@@ -41,7 +43,8 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              navigate("/");
+              // navigate("/");
+              navigate(from, { replace: true });
             }
           });
         })
@@ -57,18 +60,15 @@ const SignUp = () => {
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Sign Up now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+            <h1 className="text-5xl font-bold text-info">Sign Up!</h1>
+            <p className="py-2">
+              Please enter your details
             </p>
           </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Name</span>
                 </label>
                 <input
                   type="text"
@@ -84,7 +84,6 @@ const SignUp = () => {
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Photo URL</span>
                 </label>
                 <input
                   type="text"
@@ -99,7 +98,6 @@ const SignUp = () => {
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
                 </label>
                 <input
                   type="email"
@@ -115,7 +113,6 @@ const SignUp = () => {
 
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
                 </label>
                 <input
                   type="password"
@@ -158,9 +155,9 @@ const SignUp = () => {
                   </a>
                 </label>
               </div>
-              <div className="form-control mt-6">
+              <div className="form-control mt-2">
                 <input
-                  className="btn btn-primary"
+                  className="btn btn-warning btn-sm"
                   type="submit"
                   value="Sign Up"
                 />
@@ -169,12 +166,12 @@ const SignUp = () => {
             <div className="px-4">
               <p className='pl-6'>
                 Already have an account?
-                <span className="font-bold text-primary">
+                <span className="font-bold text-info ml-2">
                   <Link to="/login">Login here</Link>
                 </span>
               </p>
             </div>
-            <div className='p-6'>
+            <div className='px-2 pb-6'>
               <div className="divider"></div>
               <SocialLogin></SocialLogin>
               </div>

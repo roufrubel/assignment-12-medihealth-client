@@ -93,12 +93,13 @@ const Antibiotics = () => {
     return (
         <>        
         <div className="pt-20 px-10">
-            <h2 className="font-bold text-info text-xl py-4">Antibiotics medicines</h2>
-            <div className="overflow-x-auto">
+            <h2 className="font-bold text-info text-xl py-6 text-center">Antibiotics medicines</h2>
+            <div className="overflow-x-auto md:mx-52 lg:mx-52 md:p-10 lg:p-10 border-2 rounded-xl">
             <table className="table table-xs ">
           <thead>
             <tr>
               <th>Name</th>
+              <th>Image</th>
               <th>Category</th>
               <th>Price</th>
               <th>View</th>
@@ -109,6 +110,7 @@ const Antibiotics = () => {
             {antibiotics.map((data) => (
                 <tr key={data._id}>
                   <td className="font-bold">{data?.name}</td>
+                  <td><img  className="rounded w-12" src={data.image} alt="medicine image" /></td>
                   <td>{data?.category}</td>
                   <td>${data?.price}</td>
                {/* view */}

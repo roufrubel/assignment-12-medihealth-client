@@ -19,9 +19,10 @@ const CheckoutForm = () => {
   const [cart, refetch] = useCart();
   const navigate = useNavigate();
 
-  const totalPrice = cart
-    .reduce((total, item) => total + item.price * item.quantity, 0)
+  const totalPriceText = cart
+    .reduce((total, item) => total + (item.price * item.quantity), 0)
     .toFixed(2);
+    const totalPrice = parseInt(totalPriceText)
 
   useEffect(() => {
     if (totalPrice > 0) {
