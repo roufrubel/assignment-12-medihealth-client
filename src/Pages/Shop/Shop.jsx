@@ -59,7 +59,7 @@ const Shop = () => {
       }
       axiosSecure.post('/carts', cartItem)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data.insertedId){
           Swal.fire({
             position: "top-end",
@@ -90,6 +90,7 @@ const Shop = () => {
     }
   }
 
+
   if (loading) {
     <progress className="progress w-56"></progress>;
   }
@@ -99,7 +100,7 @@ const Shop = () => {
     <>
       <div className="pt-20 px-10">
         <h2 className="font-bold text-info text-xl py-6 text-center">
-          All Category Medicines
+          All Medicines
         </h2>
         <div className="overflow-x-auto md:mx-52 lg:mx-52 md:p-10 lg:p-10 border-2 rounded-xl">
           <table className="table table-xs ">

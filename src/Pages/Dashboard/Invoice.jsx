@@ -44,7 +44,7 @@ const Invoice = () => {
         <strong>Email:</strong> {payment.email}
       </p>
       <p>
-        <strong>Medicine Name:</strong>{payment?.medicineName.map(name => <li>{name}</li>)}
+        <strong>Medicine Name:</strong>{payment?.medicineName.map((name, idx) => <li key={idx}>{name}</li>)}
       </p>
       <p>
         <strong>Total Price:</strong> ${payment.price}

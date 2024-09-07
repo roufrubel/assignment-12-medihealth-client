@@ -1,99 +1,99 @@
-
-import useMedicine from '../../hooks/useMedicine';
-import React, { useEffect, useState } from 'react';
-import { GrView } from 'react-icons/gr';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import useMedicine from "../../hooks/useMedicine";
 import useAuth from '../../hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useCart from '../../hooks/useCart';
+import { GrView } from 'react-icons/gr';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Antibiotics = () => {
+const CategoryMedicines = () => {
+    const { category } = useParams();
     const [medicine, loading] = useMedicine();
-
     const [viewDetails, setViewDetails] = useState(null);
-    const [selectedMedicine, setSelectedMedicine] = useState(null);
+    // const [selectedMedicine, setSelectedMedicine] = useState(null);
     const {user} = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const axiosSecure = useAxiosSecure();
     const [ , refetch] = useCart();
-
-    const antibiotics = medicine.filter(md => md.category === "Antibiotics")
+  
+    if (loading) {
+      return <progress className="progress w-56"></progress>;
+    }
+  
+    const filteredMedicines = medicine.filter(med => med.category === category);
 
     useEffect(() => {
-      if(viewDetails){
-        document.getElementById("medihealth-modal").showModal();
-      }
-    }, [viewDetails]);
-  
-    const closeModal = () => {
-      setViewDetails(null);
-      document.getElementById("medihealth-modal").close();
-    };
-
-    // handle select
-    const handleSelect = (selectedMedicine) => {
-      // Check if selectedMedicine is null or undefined
-    if (!selectedMedicine) {
-      console.error("No medicine selected.");
-      return;
-    }
-  
-      if(user && user.email){
-         // destructuring from selectedMedicine
-         const { _id, name, image, price, category } = selectedMedicine;
-        // send selected medicine cart to db
-        const cartItem = {
-          medicineId: _id,
-          email: user.email,
-          name,
-          image,
-          price,
-          category
+        if(viewDetails){
+          document.getElementById("medihealth-modal").showModal();
         }
-        axiosSecure.post('/carts', cartItem)
-        .then(res => {
-          console.log(res.data)
-          if(res.data.insertedId){
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: `${name} has been selected`,
-              showConfirmButton: false,
-              timer: 1000
-            });
-            // refetch the cart data to update cart count
-            refetch();
-          }
-        })
-      } else{
-        Swal.fire({
-          title: "You are not logged in?",
-          text: "Please login to add the cart !",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, login"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // send user to the login page
-            navigate('/login', {state: {from: location}});
-          }
-        });
-      }
-    }
-
-    if(loading){
-        <progress className="progress w-56"></progress>
-    }
+      }, [viewDetails]);
     
+      const closeModal = () => {
+        setViewDetails(null);
+        document.getElementById("medihealth-modal").close();
+      };
+    
+        // handle select
+        const handleSelect = (viewDetails) => {
+          // Check if selectedMedicine is null or undefined
+        if (!viewDetails) {
+          console.error("No medicine selected.");
+          return;
+        }
+      
+          if(user && user.email){
+             // destructuring from selectedMedicine
+             const { _id, name, image, price, category } = viewDetails;
+            // send selected medicine cart to db
+            const cartItem = {
+              medicineId: _id,
+              email: user.email,
+              name,
+              image,
+              price,
+              category,
+              quantity: 1
+            }
+            axiosSecure.post('/carts', cartItem)
+            .then(res => {
+            //   console.log(res.data)
+              if(res.data.insertedId){
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: `${name} has been selected`,
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+                // refetch the cart data to update cart count
+                refetch();
+              }
+            })
+          } else{
+            Swal.fire({
+              title: "You are not logged in?",
+              text: "Please login to add the cart !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, login"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // send user to the login page
+                navigate('/login', {state: {from: location}});
+              }
+            });
+          }
+        }
 
-    return (
-        <>        
+    return  (
+<>
+        
         <div className="pt-20 px-10">
-            <h2 className="font-bold text-info text-xl py-6 text-center">Antibiotics medicines</h2>
+            <h2 className="font-bold text-info text-xl py-6 text-center">{category} Medicines</h2>
             <div className="overflow-x-auto md:mx-52 lg:mx-52 md:p-10 lg:p-10 border-2 rounded-xl">
             <table className="table table-xs ">
           <thead>
@@ -107,17 +107,17 @@ const Antibiotics = () => {
             </tr>
           </thead>
           <tbody>
-            {antibiotics.map((data) => (
+            {filteredMedicines.map((data) => (
                 <tr key={data._id}>
                   <td className="font-bold">{data?.name}</td>
                   <td><img  className="rounded w-12" src={data.image} alt="medicine image" /></td>
                   <td>{data?.category}</td>
                   <td>${data?.price}</td>
-               {/* view */}
-               <td>
+                  {/* view */}
+                  <td>
                       <button
                         className="btn btn-circle btn-sm btn-outline font-bold btn-info"
-                        onClick={() => setViewDetails(data)}
+                        onClick={() =>  setViewDetails(data)}
                       >
                         <GrView />
                       </button>
@@ -170,7 +170,29 @@ const Antibiotics = () => {
       </div>
         </div>
         </>
-    );
+
+
+
+
+
+
+        // <div>
+        //   <h2>{category} Medicines</h2>
+        //   <div className="medicine-list">
+
+        //     {filteredMedicines.map((med) => (
+
+        //       <div key={med._id} className="medicine-card">
+        //         <h3>{med.name}</h3>
+        //         <p>Price: ${med.price}</p>
+        //         {/* Add more details or actions as needed */}
+        //       </div>
+
+        //     ))}
+
+        //   </div>
+        // </div>
+      );
 };
 
-export default Antibiotics;
+export default CategoryMedicines;

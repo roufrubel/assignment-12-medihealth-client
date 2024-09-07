@@ -6,12 +6,6 @@ import Shop from "../Pages/Shop/Shop";
 import Login from "../Pages/Login/Login";
 import UpdateProfile from "../Pages/UpdateProfile/UpdateProfile";
 import SignUp from "../Pages/SignUp/SignUp";
-import PainRelief from "../Pages/SingleCategory/PainRelief";
-import Antibiotics from "../Pages/SingleCategory/Antibiotics";
-import AllergyRelief from "../Pages/SingleCategory/AllergyRelief";
-import DigestiveHealth from "../Pages/SingleCategory/DigestiveHealth";
-import ColdFlu from "../Pages/SingleCategory/ColdFlu";
-import VitaminsSupplements from "../Pages/SingleCategory/VitaminsSupplements";
 import Cart from "../Pages/Dashboard/Cart";
 import UserHome from "../Pages/Dashboard/UserHome";
 import Payment from "../Pages/Dashboard/Payment";
@@ -19,6 +13,8 @@ import Invoice from "../Pages/Dashboard/Invoice";
 import AdminRoute from "./AdminRoute";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import ManageCategory from "../Pages/Dashboard/ManageCategory";
+import CategoryMedicines from "../Pages/Home/CategoryMedicines";
 
 export const router = createBrowserRouter([
   {
@@ -34,42 +30,13 @@ export const router = createBrowserRouter([
         element: <Shop></Shop>,
       },
       {
+        path: "/category/:category",
+        element: <CategoryMedicines></CategoryMedicines>
+      },
+      {
         path: "updateProfile",
         element: <UpdateProfile></UpdateProfile>,
       },
-      {
-        path: "painRelief",
-        element: <PainRelief></PainRelief>,
-      },
-      {
-        path: "antibiotics",
-        element: <Antibiotics></Antibiotics>,
-      },
-      {
-        path: "allergyRelief",
-        element: <AllergyRelief></AllergyRelief>,
-      },
-      {
-        path: "digestiveHealth",
-        element: <DigestiveHealth></DigestiveHealth>,
-      },
-      {
-        path: "coldFlu",
-        element: <ColdFlu></ColdFlu>,
-      },
-      {
-        path: "vitaminsSupplements",
-        element: <VitaminsSupplements></VitaminsSupplements>
-      },
-
-      // {
-      //   path: "menu",
-      //   element: <Menu></Menu>,
-      // },
-      // {
-      //   path: "order/:category",
-      //   element: <Order></Order>,
-      // },
       {
         path: "login",
         element: <Login></Login>,
@@ -78,14 +45,6 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignUp></SignUp>,
       },
-      // {
-      //   path: "secret",
-      //   element: (
-      //     <PrivateRoute>
-      //       <Secret></Secret>
-      //     </PrivateRoute>
-      //   ),
-      // },
     ],
   },
   {
@@ -131,21 +90,14 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-    //   {
-    //     path: "addItems",
-    //     element: (
-    //       <AdminRoute>
-    //         <AddItems></AddItems>
-    //       </AdminRoute>
-    //     ),
-    //   },
-    //   {
-    //     path: "manageItems",
-    //     element: (
-    //       <AdminRoute>
-    //         <ManageItems></ManageItems>
-    //       </AdminRoute>
-    //     ),
+      {
+        path: "manageCategory",
+        element: (
+          <AdminRoute>
+            <ManageCategory></ManageCategory>
+          </AdminRoute>
+        ),
+      },
     //   },
     //   {
     //     path: "updateItem/:id",
@@ -158,14 +110,6 @@ export const router = createBrowserRouter([
     //       fetch(
     //         `https://bistro-boss-server-chi-taupe.vercel.app/menu/${params.id}`
     //       ),
-    //   },
-    //   {
-    //     path: "users",
-    //     element: (
-    //       <AdminRoute>
-    //         <AllUsers></AllUsers>
-    //       </AdminRoute>
-    //     ),
     //   },
     ],
   },
