@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import useMedicine from "../../hooks/useMedicine";
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -168,6 +168,11 @@ const CategoryMedicines = () => {
           </tbody>
         </table>
       </div>
+        </div>
+        <div className="flex justify-center">
+        <Link className="py-6" to="/shop">
+        <button className="btn btn-warning btn-sm">See All Category Medicines</button>
+        </Link>
         </div>
         </>
 

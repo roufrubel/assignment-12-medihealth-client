@@ -34,6 +34,11 @@ const Dashboard = () => {
             <TbCategoryPlus />Manage Categories
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/cart">
+              <FaCartPlus /> My Cart ({cart.length})
+            </NavLink>
+          </li>
             </> :
             <>
             {/* user dashboard */}
