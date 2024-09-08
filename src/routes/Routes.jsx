@@ -15,6 +15,8 @@ import AdminHome from "../Pages/Dashboard/AdminHome";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import ManageCategory from "../Pages/Dashboard/ManageCategory";
 import CategoryMedicines from "../Pages/Home/CategoryMedicines";
+import PaymentManagement from "../Pages/Dashboard/PaymentManagement";
+import UpdateCategoryMedicine from "../Pages/Dashboard/UpdateCategoryMedicine";
 
 export const router = createBrowserRouter([
   {
@@ -98,19 +100,26 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-    //   },
-    //   {
-    //     path: "updateItem/:id",
-    //     element: (
-    //       <AdminRoute>
-    //         <UpdateItem></UpdateItem>
-    //       </AdminRoute>
-    //     ),
-    //     loader: ({ params }) =>
-    //       fetch(
-    //         `https://bistro-boss-server-chi-taupe.vercel.app/menu/${params.id}`
-    //       ),
-    //   },
+      {
+        path: "updateCategoryMedicine/:id",
+        element: (
+          <AdminRoute>
+            <UpdateCategoryMedicine></UpdateCategoryMedicine>
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          // fetch(`http://localhost:5000/medicine/${params.id}`),
+          fetch(`https://assignment-12-medihealth-server.vercel.app/medicine/${params.id}`),
+      },
+      {
+        path: "paymentManagement",
+        element: (
+          <AdminRoute>
+            <PaymentManagement></PaymentManagement>
+          </AdminRoute>
+        )
+      },
+
     ],
   },
 ]);

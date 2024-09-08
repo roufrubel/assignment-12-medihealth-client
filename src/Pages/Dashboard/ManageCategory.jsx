@@ -1,90 +1,16 @@
-import { GrView } from "react-icons/gr";
 import useMedicine from "../../hooks/useMedicine";
-import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useCart from "../../hooks/useCart";
 import Swal from "sweetalert2";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ManageCategory = () => {
-  const [medicine, loading] = useMedicine();
-  const [viewDetails, setViewDetails] = useState(null);
+  const [medicine, loading, refetch] = useMedicine();
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
   const axiosSecure = useAxiosSecure();
-  const [, refetch] = useCart();
 
-  // const openModal = (data) => {
-  //   setViewDetails(data);
-  //   document.getElementById("medihealth-modal").showModal();
-  // };
-
-  useEffect(() => {
-    if (viewDetails) {
-      document.getElementById("medihealth-modal").showModal();
-    }
-  }, [viewDetails]);
-
-  const closeModal = () => {
-    setViewDetails(null);
-    document.getElementById("medihealth-modal").close();
-  };
-
-  // handle select
-  const handleSelect = (viewDetails) => {
-    // Check if viewDetails is null or undefined
-    if (!viewDetails) {
-      console.error("No medicine selected.");
-      return;
-    }
-
-    if (user && user.email) {
-      // destructuring from viewDetails
-      const { _id, name, image, price, category } = viewDetails;
-      // send selected medicine cart to db
-      const cartItem = {
-        medicineId: _id,
-        email: user.email,
-        name,
-        image,
-        price,
-        category,
-        quantity: 1,
-      };
-      axiosSecure.post("/carts", cartItem).then((res) => {
-        // console.log(res.data)
-        if (res.data.insertedId) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${name} has been selected`,
-            showConfirmButton: false,
-            timer: 1000,
-          });
-          // refetch the cart data to update cart count
-          refetch();
-        }
-      });
-    } else {
-      Swal.fire({
-        title: "You are not logged in?",
-        text: "Please login to add the cart !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, login",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // send user to the login page
-          navigate("/login", { state: { from: location } });
-        }
-      });
-    }
-  };
-
+  // handle add category
   const handleAddCategoryMedicine = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -123,26 +49,55 @@ const ManageCategory = () => {
     });
   };
 
+
+// handle delete category
+  const handleDeleteCategoryMedicine = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/medicine/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire(`Deleted! Your medicine has been deleted. success`);
+            refetch();
+          }
+        });
+      }
+    });
+  };
+
   if (loading) {
     <progress className="progress w-56"></progress>;
   }
 
   return (
     <>
-    <div className="bg-slate-100 rounded-lg flex justify-evenly items-center p-3 mb-3">
-    <div><h2 className="font-bold text-info text-xl text-center">
-          All categories of medicines
-        </h2></div>
-      <div><button
-        className="btn btn-info btn-sm"
-        onClick={() => document.getElementById("my_modal_1").showModal()}
-      >
-        Add Category Medicine
-      </button></div>
-    </div>
+      <div className="bg-neutral rounded-lg flex justify-evenly items-center p-3 mb-3">
+        <div>
+          <h2 className="font-bold text-neutral-content text-xl text-center">
+            Manage All categories of medicines
+          </h2>
+        </div>
+        <div>
+          <button
+            className="btn btn-warning btn-sm"
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+          >
+            Add Category Medicine
+          </button>
+        </div>
+      </div>
       <dialog id="my_modal_1" className="modal">
         <form onSubmit={handleAddCategoryMedicine} className="modal-box">
-        <h3 className="font-bold text-lg text-info mb-3">Add Category Medicine</h3>
+          <h3 className="font-bold text-lg text-info mb-3">
+            Add Category Medicine
+          </h3>
           <input
             className="w-full p-2 rounded-md border-2 mb-2"
             type="text"
@@ -217,8 +172,8 @@ const ManageCategory = () => {
                 <th>Image</th>
                 <th>Category</th>
                 <th>Price</th>
-                <th>View</th>
-                <th>Select</th>
+                <th>Update</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -235,56 +190,20 @@ const ManageCategory = () => {
                   <td>{data?.category}</td>
                   <td>${data?.price}</td>
 
-                  {/* view */}
                   <td>
-                    <button
-                      className="btn btn-circle btn-sm btn-outline font-bold btn-info"
-                      onClick={() => setViewDetails(data)}
-                    >
-                      <GrView />
-                    </button>
-                    {viewDetails && (
-                      <dialog
-                        id="medihealth-modal"
-                        className="modal modal-bottom sm:modal-middle"
-                      >
-                        <div className="modal-box">
-                          <img
-                            className="w-1/2"
-                            src={viewDetails.image}
-                            alt=""
-                          />
-                          <h3 className="font-bold text-info text-lg py-2">
-                            {viewDetails.name}
-                          </h3>
-                          <div className="flex justify-start gap-4 font-bold mb-3">
-                            <p>{viewDetails.category}</p>
-                            <p>{viewDetails.quantity}</p>
-                            <p>{viewDetails.dosage}</p>
-                            <p>${viewDetails.price}</p>
-                          </div>
-                          <p>{viewDetails.short_description}</p>
-                          <div className="modal-action">
-                            <form method="dialog">
-                              <button
-                                className="btn btn-sm btn-circle btn-info absolute right-2 top-2"
-                                onClick={closeModal}
-                              >
-                                ✕
-                              </button>
-                            </form>
-                          </div>
-                        </div>
-                      </dialog>
-                    )}
+                    <Link to={`/dashboard/updateCategoryMedicine/${data._id}`}>
+                      <button className="btn btn-xs btn-info btn-outline btn-circle font-bold">
+                        <FaEdit />
+                      </button>
+                    </Link>
                   </td>
 
                   <td>
                     <button
-                      onClick={() => handleSelect(data)}
-                      className="btn btn-xs btn-info font-bold"
+                      onClick={() => handleDeleteCategoryMedicine(data._id)}
+                      className="btn btn-xs btn-info btn-outline btn-circle font-bold"
                     >
-                      Select
+                      <FaTrash></FaTrash>
                     </button>
                   </td>
                 </tr>

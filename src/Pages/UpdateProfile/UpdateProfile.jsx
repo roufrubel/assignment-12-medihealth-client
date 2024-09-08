@@ -39,15 +39,17 @@ const UpdateProfile = () => {
           <Helmet>
                 <title>Update Profile |  mediHealth</title>
             </Helmet>
-          <div className="w-full md:w-3/5 lg:w-3/5 mx-auto mt-14 mb-14">
-            <div className="bg-slate-100 p-10 rounded-md">
-             <h4 className="text-center">Please Update Your Profile</h4>
+          <div className="w-full md:w-3/5 lg:w-3/5 mx-auto pt-32 mb-14">
+            <div className="bg-info p-10 rounded-md">
+             <h4 className="text-center mb-6 text-xl text-white font-bold">Please Update Your Profile</h4>
         <form onSubmit={handleUpdateProfile}>
           <input className="w-full p-2 rounded-md" type="text" name="name" defaultValue={user.displayName} placeholder="your name" id="" /><br /><br/>
           <input className="w-full p-2 rounded-md" type="text" name="photo" defaultValue={user.photoURL} placeholder="your photo" id="" /><br /><br/>
           <input className="w-full p-2 rounded-md"  type="email" name="email" defaultValue={user.email} placeholder="your email" id="" /><br /><br/>
           <input className="w-full p-2 rounded-md" type="password" defaultValue={user.password} name="password" placeholder="your password" id="" /> <br /><br/>
-          <input  className="p-1 w-full bg-blue-500 text-white rounded-md font-bold cursor-pointer" type="submit" value="Update" />
+          <div className="flex justify-center">
+          <input  className="p-1 bg-white px-6 rounded-md font-bold cursor-pointer " type="submit" value="Update profile" />
+          </div>
           <ToastContainer />
         </form>
       </div>

@@ -57,16 +57,21 @@ const SignUp = () => {
       <Helmet>
         <title>mediHealth | Sign Up</title>
       </Helmet>
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero bg-info min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold text-info">Sign Up!</h1>
+            <h1 className="text-5xl font-bold">Sign Up!</h1>
             <p className="py-2">
               Please enter your details
             </p>
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow">
+          <div className='px-2 pt-6'>
+              <SocialLogin></SocialLogin>
+              <div className="divider">Or</div>
+              </div>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+              <h2 className="font-bold text-info text-center text-lg">Sign up</h2>
               <div className="form-control">
                 <label className="label">
                 </label>
@@ -164,17 +169,17 @@ const SignUp = () => {
               </div>
             </form>
             <div className="px-4">
-              <p className='pl-6'>
+              <p className='pl-6 pb-6'>
                 Already have an account?
                 <span className="font-bold text-info ml-2">
                   <Link to="/login">Login here</Link>
                 </span>
               </p>
             </div>
-            <div className='px-2 pb-6'>
-              <div className="divider"></div>
+            {/* <div className='px-2 pb-6'>
               <SocialLogin></SocialLogin>
-              </div>
+              <div className="divider">Or</div>
+              </div> */}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useCart from "../hooks/useCart";
-import { FaCartPlus, FaHome, FaSearch, FaUsers } from "react-icons/fa";
+import { FaCartPlus, FaDollarSign, FaHome, FaSearch, FaUsers } from "react-icons/fa";
 import { TbCategoryPlus } from "react-icons/tb";
 
 const Dashboard = () => {
@@ -32,6 +32,11 @@ const Dashboard = () => {
             <li>
             <NavLink to="/dashboard/manageCategory">
             <TbCategoryPlus />Manage Categories
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/paymentManagement">
+            <FaDollarSign />Payment Management
             </NavLink>
           </li>
           <li>

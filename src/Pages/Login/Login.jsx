@@ -54,16 +54,25 @@ const Login = () => {
         <Helmet>
         <title>mediHealth | Sign In</title>
       </Helmet>
-        <div className="hero bg-base-200 min-h-screen">
+        <div className="hero bg-info min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold text-info">Login!</h1>
+            <h1 className="text-5xl font-bold">Login!</h1>
             <p className="py-6">
               Please enter your details
             </p>
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow">
+
+          <div className='px-4  pt-6'>
+              <div className='px-2'>
+              <SocialLogin></SocialLogin>
+              <div className="divider">Or</div>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="card-body">
+            <h2 className="font-bold text-info text-center text-lg">Login</h2>
               <div className="form-control">
                 <label className="label">
                 </label>
@@ -84,16 +93,18 @@ const Login = () => {
                 <input onBlur={handleValidateCaptcha} type="text" name="captcha" placeholder="type here the captcha above" className="input input-bordered" required />               
               </div>
               <div className="form-control mt-2">
-                <button disabled={disabled} className="btn btn-warning btn-sm"><input className="uppercase font-semibold" type="submit"  value="Login" /></button>
+                {/* <button disabled={disabled} className="btn btn-warning btn-sm"><input className="uppercase font-semibold" type="submit"  value="Login" /></button> */}
+                <button className="btn btn-warning btn-sm"><input className="uppercase font-semibold" type="submit"  value="Login" /></button>
               </div>
             </form>
-            <div className='px-4'>
+            <p className='pl-6 pb-4'>New here? <span className="font-bold text-info ml-2"><Link to="/signup">Create Account</Link></span></p>
+            {/* <div className='px-4'>
               <p className='pl-6'>New here? <span className="font-bold text-info ml-2"><Link to="/signup">Create Account</Link></span></p>
               <div className='px-2 pb-4'>
               <div className="divider"></div>
               <SocialLogin></SocialLogin>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
