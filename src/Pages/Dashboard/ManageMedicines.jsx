@@ -2,12 +2,17 @@ import useMedicine from "../../hooks/useMedicine";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
-const ManageCategory = () => {
+const ManageMedicines = () => {
+    const {user} = useAuth();
   const [medicine, loading, refetch] = useMedicine();
   const axiosSecure = useAxiosSecure();
+
+  const sellerEmail = user?.email;
+    // Filter medicines for the seller
+  const sellerMedicines = medicine?.filter(medi => 
+    medi.sellerEmail.includes(sellerEmail)
+  );
 
   // handle add category
   const handleAddCategoryMedicine = (e) => {
@@ -22,7 +27,7 @@ const ManageCategory = () => {
     const dosage = form.dosage.value;
     const sellerEmail = form.sellerEmail.value;
     // console.log(name, photo, email, password);
-    const categoryMedicineItem = {
+    const sellerMedicineItem = {
       name,
       image,
       category,
@@ -32,7 +37,7 @@ const ManageCategory = () => {
       dosage,
       sellerEmail
     };
-    axiosSecure.post("/medicine", categoryMedicineItem).then((res) => {
+    axiosSecure.post("/medicine", sellerMedicineItem).then((res) => {
       // console.log(res.data)
       if (res.data.insertedId) {
         Swal.fire({
@@ -50,38 +55,17 @@ const ManageCategory = () => {
   };
 
 
-// handle delete category
-  const handleDeleteCategoryMedicine = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/medicine/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            Swal.fire(`Deleted! Your medicine has been deleted. success`);
-            refetch();
-          }
-        });
-      }
-    });
-  };
-
   if (loading) {
     <progress className="progress w-56"></progress>;
   }
+  
 
   return (
     <>
       <div className="bg-neutral rounded-lg flex justify-evenly items-center p-3 mb-3">
         <div>
           <h2 className="font-bold text-neutral-content text-xl text-center">
-            Manage All categories of medicines
+          Manage Medicines
           </h2>
         </div>
         <div>
@@ -89,7 +73,7 @@ const ManageCategory = () => {
             className="btn btn-warning btn-sm"
             onClick={() => document.getElementById("my_modal_1").showModal()}
           >
-            Add Category Medicine
+            Add Seller Medicine
           </button>
         </div>
       </div>
@@ -157,7 +141,7 @@ const ManageCategory = () => {
 
           <div className="modal-action">
             <button type="submit" className="btn btn-info btn-sm">
-              Add Category Medicine
+              Add Seller Medicine
             </button>
             <button
               type="button"
@@ -179,12 +163,11 @@ const ManageCategory = () => {
                 <th>Image</th>
                 <th>Category</th>
                 <th>Price</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>Seller Email</th>
               </tr>
             </thead>
             <tbody>
-              {medicine.map((data) => (
+              {sellerMedicines.map((data) => (
                 <tr key={data._id}>
                   <td className="font-bold">{data?.name}</td>
                   <td>
@@ -196,23 +179,7 @@ const ManageCategory = () => {
                   </td>
                   <td>{data?.category}</td>
                   <td>${data?.price}</td>
-
-                  <td>
-                    <Link to={`/dashboard/updateCategoryMedicine/${data._id}`}>
-                      <button className="btn btn-xs btn-info btn-outline btn-circle font-bold">
-                        <FaEdit />
-                      </button>
-                    </Link>
-                  </td>
-
-                  <td>
-                    <button
-                      onClick={() => handleDeleteCategoryMedicine(data._id)}
-                      className="btn btn-xs btn-info btn-outline btn-circle font-bold"
-                    >
-                      <FaTrash></FaTrash>
-                    </button>
-                  </td>
+                  <td>{data?.sellerEmail}</td>
                 </tr>
               ))}
             </tbody>
@@ -223,4 +190,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageMedicines;

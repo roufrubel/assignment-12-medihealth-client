@@ -3,12 +3,14 @@ import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../hooks/useCart";
 import useAuth from "../../hooks/useAuth";
 import useAdmin from "../../hooks/useAdmin";
+import useSeller from "../../hooks/useSeller";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
   const { user, logOut, loading } = useAuth();
   const [isAdmin] = useAdmin();
+  const [isSeller] = useSeller();
   const [cart] = useCart();
 
   if (loading) {
@@ -37,7 +39,12 @@ const Navbar = () => {
           <Link to="/dashboard/adminHome">Dashboard</Link>
         </li>
       )}
-      {user && !isAdmin && (
+      {user && isSeller && !isAdmin  && (
+        <li>
+          <Link to="/dashboard/sellerHome">Dashboard</Link>
+        </li>
+      )}
+      {user && user && !isSeller && !isAdmin && (
         <li>
           <Link to="/dashboard/userHome">Dashboard</Link>
         </li>

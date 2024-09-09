@@ -20,25 +20,25 @@ const SalesReport = () => {
           <div className="bg-neutral p-2 text-neutral-content text-center rounded-md my-6">
           <h2 className="font-bold text-xl">Sales Report</h2>
           </div>
-          <div className="border-2 p-6 rounded-lg w-full md:w-3/4 lg:w-3/4 mx-auto">
-          <table className="table ">
+          <div className="p-6 rounded-lg w-full md:w-3/4 lg:w-3/4 mx-auto">
+          <table className="table">
             <thead>
-              <tr className="text-info text-base">
-                <th>SL</th>
-                <th>Medicine Name</th>
-                <th>Seller Email</th>
-                <th>Buyer Email</th>
-                <th>Total Price</th>
+              <tr className="text-info text-base border-2">
+                <th className='border-2'>SL</th>
+                <th className='border-2'>Medicine Name</th>
+                <th className='border-2'>Seller Email</th>
+                <th className='border-2'>Buyer Email</th>
+                <th className='border-2'>Total Price</th>
               </tr>
             </thead>
             <tbody>
               {payments.map((payment, idx) => (
                 <tr key={payment._id}>
-                  <td className='text-info font-bold'>{idx + 1}</td>
-                  <td>{payment.medicineName.map(md => <li>{md}</li>)}</td>
-                  <td>{payment.sellerEmail.map((mail, idx) =><li className="text-xs" key={idx}>{mail}</li>)}</td>
-                  <td>{payment.buyerEmail}</td>
-                  <td>${payment.price}</td>
+                  <td className='text-info font-bold border-2'>{idx + 1}</td>
+                  <td className='border-2'>{payment.medicineName.map(md => <li className="text-xs">{md}</li>)}</td>
+                  <td className='border-2'>{payment.sellerEmail.map((mail, idx) =><li className="text-xs" key={idx}>{mail}</li>)}</td>
+                  <td className='border-2'>{payment.buyerEmail}</td>
+                  <td className='border-2'>${payment.price}</td>
                 </tr>
               ))}
             </tbody>

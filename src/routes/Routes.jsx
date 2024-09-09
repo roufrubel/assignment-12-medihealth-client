@@ -18,6 +18,13 @@ import CategoryMedicines from "../Pages/Home/CategoryMedicines";
 import PaymentManagement from "../Pages/Dashboard/PaymentManagement";
 import UpdateCategoryMedicine from "../Pages/Dashboard/UpdateCategoryMedicine";
 import SalesReport from "../Pages/Dashboard/SalesReport";
+import ManageBannerAdvertise from "../Pages/Dashboard/ManageBannerAdvertise";
+import SellerRoute from "./SellerRoute";
+import SellerHome from "../Pages/Dashboard/SellerHome";
+import ManageMedicines from "../Pages/Dashboard/ManageMedicines";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import AskForAdvertisement from "../Pages/Dashboard/AskForAdvertisement";
+import UserPaymentHistory from "../Pages/Dashboard/UserPaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +73,10 @@ export const router = createBrowserRouter([
       {
         path: "userHome",
         element: <UserHome></UserHome>,
+      },
+      {
+        path: "userPaymentHistory",
+        element: <UserPaymentHistory></UserPaymentHistory>,
       },
       {
         path: "payment",
@@ -127,6 +138,52 @@ export const router = createBrowserRouter([
             <SalesReport></SalesReport>
           </AdminRoute>
         )
+      },
+
+      // ------------------ TODO: need to write code -----------------------
+      {
+        path: "manageBannerAdvertise",
+        element: (
+          <AdminRoute>
+            <ManageBannerAdvertise></ManageBannerAdvertise>
+          </AdminRoute>
+        )
+      },
+
+       // Seller only routes
+       {
+        path: "sellerHome",
+        element: (
+          <SellerRoute>
+            <SellerHome></SellerHome>
+          </SellerRoute>
+        ),
+      },
+       {
+        path: "manageMedicines",
+        element: (
+          <SellerRoute>
+            <ManageMedicines></ManageMedicines>
+          </SellerRoute>
+        ),
+      },
+       {
+        path: "paymentHistory",
+        element: (
+          <SellerRoute>
+            <PaymentHistory></PaymentHistory>
+          </SellerRoute>
+        ),
+      },
+
+      // ------------------ TODO: need to write code -----------------------
+       {
+        path: "askForAdvertisement",
+        element: (
+          <SellerRoute>
+            <AskForAdvertisement></AskForAdvertisement>
+          </SellerRoute>
+        ),
       },
 
 

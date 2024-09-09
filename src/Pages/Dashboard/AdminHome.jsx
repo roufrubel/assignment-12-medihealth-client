@@ -19,10 +19,7 @@ const AdminHome = () => {
       .filter(payment => payment.status === 'pending')
       .reduce((sum, payment) => sum + payment.price, 0)?.toFixed(2));
     
-  if (loading) {
-    <p>Loading...</p>;
-  }
-
+  
   const { data: stats={} } = useQuery({
   // const { data: stats = {} } = useQuery({
     queryKey: ["admin-stats"],
@@ -32,6 +29,10 @@ const AdminHome = () => {
     },
   });
   const totalRevenue = stats.revenue?.toFixed(2);
+
+  if (loading) {
+    <p>Loading...</p>;
+  }
 
 //   const {data: chartData=[]} = useQuery({
 //     queryKey: ['order-stats'],

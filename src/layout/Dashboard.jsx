@@ -3,11 +3,15 @@ import useAdmin from "../hooks/useAdmin";
 import useCart from "../hooks/useCart";
 import { FaCartPlus, FaDollarSign, FaHome, FaSearch, FaUsers } from "react-icons/fa";
 import { TbCategoryPlus, TbReportAnalytics } from "react-icons/tb";
+import { RiAdvertisementFill, RiAdvertisementLine, RiSecurePaymentFill } from "react-icons/ri";
+import useSeller from "../hooks/useSeller";
+import { MdManageHistory } from "react-icons/md";
 
 const Dashboard = () => {
   const [cart] = useCart();
   // get admin value from db
   const [isAdmin] = useAdmin();
+  const [isSeller] = useSeller();
 
   return (
     <>
@@ -21,46 +25,90 @@ const Dashboard = () => {
             {/* admin dashboard */}
             <li>
             <NavLink to="/dashboard/adminHome">
-              <FaHome /> Admin Home
+              <FaHome className="text-xl"></FaHome> Admin Home
             </NavLink>
           </li>
             <li>
             <NavLink to="/dashboard/manageUsers">
-            <FaUsers />Manage Users
+            <FaUsers className="text-xl"></FaUsers>Manage Users
             </NavLink>
           </li>
             <li>
             <NavLink to="/dashboard/manageCategory">
-            <TbCategoryPlus />Manage Categories
+            <TbCategoryPlus className="text-xl"></TbCategoryPlus>Manage Categories
             </NavLink>
           </li>
             <li>
             <NavLink to="/dashboard/paymentManagement">
-            <FaDollarSign />Payment Management
+            <FaDollarSign className="text-xl"></FaDollarSign>Payment Management
             </NavLink>
           </li>
             <li>
             <NavLink to="/dashboard/salesReport">
-            <TbReportAnalytics />Sales Report
+            <TbReportAnalytics className="text-2xl"> </TbReportAnalytics>Sales Report
+            </NavLink>
+          </li>
+
+          {/* ------------- TODO: need to write code -------------------- */}
+            <li>
+            <NavLink to="/dashboard/manageBannerAdvertise">
+            <RiAdvertisementFill className="text-xl"></RiAdvertisementFill>Manage Banner Advertise
             </NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/cart">
-              <FaCartPlus /> My Cart ({cart.length})
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
             </NavLink>
           </li>
-            </> :
+            </>
+             :          
+            isSeller ?
+            <>
+            {/* seller dashboard */}
+            <li>
+            <NavLink to="/dashboard/sellerHome">
+              <FaHome className="text-xl"></FaHome> Seller Home
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/manageMedicines">
+              <MdManageHistory className="text-xl"></MdManageHistory> Manage Medicines
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/paymentHistory">
+              <RiSecurePaymentFill className="text-xl"></RiSecurePaymentFill> Payment History
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/askForAdvertisement">
+              <RiAdvertisementLine className="text-xl"></RiAdvertisementLine> Ask For Advertisement
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/cart">
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
+            </NavLink>
+          </li>
+          </>
+          
+             :
             <>
             {/* user dashboard */}
             <li>
             <NavLink to="/dashboard/userHome">
-              <FaHome /> User Home
+              <FaHome className="text-xl"></FaHome> User Home
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/userPaymentHistory">
+              <RiSecurePaymentFill className="text-xl"></RiSecurePaymentFill> Payment History
             </NavLink>
           </li>
           
           <li>
             <NavLink to="/dashboard/cart">
-              <FaCartPlus /> My Cart ({cart.length})
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
             </NavLink>
           </li>
             </>
@@ -69,12 +117,12 @@ const Dashboard = () => {
           <div className="divider my-4 divider-info"></div>
           <li>
             <NavLink to="/">
-              <FaHome />Home
+              <FaHome className="text-xl"></FaHome>Home
             </NavLink>
           </li>
           <li>
             <NavLink to="/shop">
-              <FaSearch />Shop
+              <FaSearch className="text-xl"></FaSearch>Shop
             </NavLink>
           </li>
         </ul>

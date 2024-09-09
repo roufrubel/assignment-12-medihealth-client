@@ -70,7 +70,7 @@ const PaymentManagement = () => {
                         <button
                           className="btn btn-success btn-outline btn-sm"
                         >
-                         <IoMdCheckmarkCircleOutline className="text-successn text-xl"></IoMdCheckmarkCircleOutline>
+                         <IoMdCheckmarkCircleOutline className="text-success text-xl"></IoMdCheckmarkCircleOutline>
                          Done
                         </button>
                       )
