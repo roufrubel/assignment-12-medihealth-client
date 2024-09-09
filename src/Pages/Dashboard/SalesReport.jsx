@@ -36,7 +36,7 @@ const SalesReport = () => {
                 <tr key={payment._id}>
                   <td className='text-info font-bold'>{idx + 1}</td>
                   <td>{payment.medicineName.map(md => <li>{md}</li>)}</td>
-                  <td>{payment.sellerEmail.find((mail, idx) =><span key={idx}>{mail}</span>)}</td>
+                  <td>{payment.sellerEmail.map((mail, idx) =><li className="text-xs" key={idx}>{mail}</li>)}</td>
                   <td>{payment.buyerEmail}</td>
                   <td>${payment.price}</td>
                 </tr>
