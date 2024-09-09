@@ -21,9 +21,7 @@ const CategoryCardSection = () => {
     acc[med.category].push(med);
     return acc;
   }, {});
-
-
-   
+  
 
   return (
     <div id="features" className="features-section mt-16 ">

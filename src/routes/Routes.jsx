@@ -17,6 +17,7 @@ import ManageCategory from "../Pages/Dashboard/ManageCategory";
 import CategoryMedicines from "../Pages/Home/CategoryMedicines";
 import PaymentManagement from "../Pages/Dashboard/PaymentManagement";
 import UpdateCategoryMedicine from "../Pages/Dashboard/UpdateCategoryMedicine";
+import SalesReport from "../Pages/Dashboard/SalesReport";
 
 export const router = createBrowserRouter([
   {
@@ -119,6 +120,16 @@ export const router = createBrowserRouter([
           </AdminRoute>
         )
       },
+      {
+        path: "salesReport",
+        element: (
+          <AdminRoute>
+            <SalesReport></SalesReport>
+          </AdminRoute>
+        )
+      },
+
+
 
     ],
   },

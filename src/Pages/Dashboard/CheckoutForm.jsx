@@ -16,20 +16,20 @@ const CheckoutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [cart, refetch] = useCart();
+  const [cart,  ,refetch] = useCart();
   const navigate = useNavigate();
 
   const totalPriceText = cart
-    .reduce((total, item) => total + (item.price * item.quantity), 0)
+    .reduce((total, item) => total + item.price * item.quantity, 0)
     .toFixed(2);
-    const totalPrice = parseInt(totalPriceText)
+  const totalPrice = parseInt(totalPriceText);
 
   useEffect(() => {
     if (totalPrice > 0) {
       axiosSecure
         .post("/create-payment-intent", { price: totalPrice })
         .then((res) => {
-          console.log(res.data.clientSecret);
+          // console.log(res.data.clientSecret);
           setClientSecret(res.data.clientSecret);
         });
     }
@@ -76,15 +76,16 @@ const CheckoutForm = () => {
     if (confirmError) {
       console.log("confirmError");
     } else {
-      console.log("payment intent", paymentIntent);
+      // console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
+        // console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
 
         // now save the payment in the database
         const payment = {
           userName: user.displayName,
-          email: user.email,
+          buyerEmail: user.email,
+          sellerEmail: cart.map((item) => item.sellerEmail),
           price: totalPrice,
           transactionId: paymentIntent.id,
           date: moment().format("DD-MM-YYYY"), // formatted date using moment.js
@@ -95,9 +96,9 @@ const CheckoutForm = () => {
         };
 
         const res = await axiosSecure.post("/payments", payment);
-        console.log("payment saved", res.data);
-        refetch();
-        if (res.data?.paymentResult?.insertedId) {
+        // console.log("payment saved", res.data);
+        
+        if (res.data?.paymentResult?.insertedId || res.data?.paymentResult?.modifiedCount) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -105,13 +106,12 @@ const CheckoutForm = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-
-          // Clear the card input field
-          card.clear();
-
           //  redirect or navigate to invoice page
           // Pass payment data via navigate state
-          navigate("/dashboard/invoice", { state: { payment } });
+          navigate("/dashboard/invoice", { state: { payment } });          
+          refetch();
+          // Clear the card input field
+          card.clear();          
         }
       }
     }

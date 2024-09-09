@@ -37,10 +37,14 @@ const PaymentManagement = () => {
   }
     return(
         <div>
-          <h2>Payment Management</h2>
-          <table className="table">
+          <div className="bg-neutral p-2 text-neutral-content text-center rounded-md my-6">
+          <h2 className="font-bold text-lg">Payment Management</h2>
+          </div>
+          <div className="border-2 p-6 rounded-lg w-full md:w-3/4 lg:w-3/4 mx-auto">
+          <table className="table ">
             <thead>
-              <tr>
+              <tr className="text-info">
+                <th>SL</th>
                 <th>Transaction Id</th>
                 <th>Amount</th>
                 <th>Status</th>
@@ -48,8 +52,9 @@ const PaymentManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {payments.map(payment => (
+              {payments.map((payment, idx) => (
                 <tr key={payment._id}>
+                  <td>{idx + 1}</td>
                   <td>{payment.transactionId}</td>
                   <td>{payment.price}</td>
                   <td className="uppercase">{payment.status}</td>
@@ -65,7 +70,7 @@ const PaymentManagement = () => {
                         <button
                           className="btn btn-success btn-outline btn-sm"
                         >
-                         <IoMdCheckmarkCircleOutline className="text-successn text-lg"></IoMdCheckmarkCircleOutline>
+                         <IoMdCheckmarkCircleOutline className="text-successn text-xl"></IoMdCheckmarkCircleOutline>
                          Done
                         </button>
                       )
@@ -75,6 +80,7 @@ const PaymentManagement = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       );
 };

@@ -7,8 +7,10 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { MdDeleteForever } from "react-icons/md";
 
 const Cart = () => {
-  const [cart, refetch] = useCart();
+  const [cart, loading, refetch] = useCart();
   const axiosSecure = useAxiosSecure();
+
+  // console.log(cart)
 
   const totalPrice = cart
     .reduce((total, item) => total + item.price * item.quantity, 0)
@@ -73,6 +75,10 @@ const handleIncrease = (id) => {
         }
     })
   };
+
+  if (loading) {
+    <progress className="progress w-56"></progress>;
+  }
   
 
   return (

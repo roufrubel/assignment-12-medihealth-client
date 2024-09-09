@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useCart from "../hooks/useCart";
 import { FaCartPlus, FaDollarSign, FaHome, FaSearch, FaUsers } from "react-icons/fa";
-import { TbCategoryPlus } from "react-icons/tb";
+import { TbCategoryPlus, TbReportAnalytics } from "react-icons/tb";
 
 const Dashboard = () => {
   const [cart] = useCart();
@@ -37,6 +37,11 @@ const Dashboard = () => {
             <li>
             <NavLink to="/dashboard/paymentManagement">
             <FaDollarSign />Payment Management
+            </NavLink>
+          </li>
+            <li>
+            <NavLink to="/dashboard/salesReport">
+            <TbReportAnalytics />Sales Report
             </NavLink>
           </li>
           <li>

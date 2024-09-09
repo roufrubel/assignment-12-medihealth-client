@@ -11,12 +11,13 @@ import Swal from "sweetalert2";
 const Shop = () => {
   const [medicine, loading] = useMedicine();
   const [viewDetails, setViewDetails] = useState(null);
-  const [selectedMedicine, setSelectedMedicine] = useState(null);
+  // const [selectedMedicine, setSelectedMedicine] = useState(null);
   const {user} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
-  const [ , refetch] = useCart();
+  const [ , , refetch] = useCart();
+  // console.log(viewDetails)
 
  
   // const openModal = (data) => {
@@ -37,30 +38,31 @@ const Shop = () => {
 
 
   // handle select
-  const handleSelect = (selectedMedicine) => {
+  const handleSelect = (viewDetails) => {
     // Check if selectedMedicine is null or undefined
-  if (!selectedMedicine) {
+  if (!viewDetails) {
     console.error("No medicine selected.");
     return;
   }
 
     if(user && user.email){
        // destructuring from selectedMedicine
-       const { _id, name, image, price, category } = selectedMedicine;
+       const { _id, name, image, price, category, sellerEmail } = viewDetails;
       // send selected medicine cart to db
       const cartItem = {
         medicineId: _id,
-        email: user.email,
+        buyerEmail: user.email,
         name,
         image,
         price,
         category,
+        sellerEmail,
         quantity: 1
       }
       axiosSecure.post('/carts', cartItem)
       .then(res => {
         // console.log(res.data)
-        if(res.data.insertedId){
+        if(res.data.insertedId || res.data.modifiedCount){
           Swal.fire({
             position: "top-end",
             icon: "success",

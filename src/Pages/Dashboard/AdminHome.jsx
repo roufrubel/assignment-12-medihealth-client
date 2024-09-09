@@ -1,11 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import usePayment from "../../hooks/usePayment";
 
 
 const AdminHome = () => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [payments, , refetch] = usePayment();
+
+      // Calculate the total paid amount
+  const paidTotal = parseInt(payments
+    ?.filter(payment => payment.status === 'paid')
+    ?.reduce((sum, payment) => sum + payment.price, 0)?.toFixed(2));
+
+    // Calculate the total paid amount
+    const pendingTotal = parseInt(payments
+      .filter(payment => payment.status === 'pending')
+      .reduce((sum, payment) => sum + payment.price, 0)?.toFixed(2));
     
   if (loading) {
     <p>Loading...</p>;
@@ -42,12 +54,12 @@ const AdminHome = () => {
 
   <div className="stat">
     <div className="stat-title  text-info font-bold">Paid Total</div>
-    <div className="stat-value text-slate-500">4,200</div>
+    <div className="stat-value text-slate-500">${paidTotal}</div>
   </div>
 
   <div className="stat">
     <div className="stat-title  text-info font-bold">Pending Total</div>
-    <div className="stat-value text-slate-500">1,200</div>
+    <div className="stat-value text-slate-500">${pendingTotal}</div>
   </div>
 </div>
         </div>

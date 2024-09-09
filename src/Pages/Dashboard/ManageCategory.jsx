@@ -21,6 +21,7 @@ const ManageCategory = () => {
     const quantity = form.quantity.value;
     const short_description = form.short_description.value;
     const dosage = form.dosage.value;
+    const sellerEmail = form.sellerEmail.value;
     // console.log(name, photo, email, password);
     const categoryMedicineItem = {
       name,
@@ -30,7 +31,7 @@ const ManageCategory = () => {
       quantity,
       short_description,
       dosage,
-      email: user.email,
+      sellerEmail
     };
     axiosSecure.post("/medicine", categoryMedicineItem).then((res) => {
       // console.log(res.data)
@@ -145,6 +146,13 @@ const ManageCategory = () => {
             type="text"
             name="dosage"
             placeholder="Your dosage"
+            required
+          />
+          <input
+            className="w-full p-2 rounded-md border-2"
+            type="text"
+            name="sellerEmail"
+            placeholder="Your  email"
             required
           />
 
