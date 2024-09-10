@@ -5,14 +5,17 @@ import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { MdDeleteForever } from "react-icons/md";
+import useAuth from "../../hooks/useAuth";
 
 const Cart = () => {
+  const {user} = useAuth();
   const [cart, loading, refetch] = useCart();
   const axiosSecure = useAxiosSecure();
 
   // console.log(cart)
+  const myCart = cart?.filter(myc => myc.buyerEmail === user.email);
 
-  const totalPrice = cart
+  const totalPrice = myCart
     .reduce((total, item) => total + item.price * item.quantity, 0)
     .toFixed(2);
 
@@ -85,12 +88,12 @@ const handleIncrease = (id) => {
     <div className="pt-4">
       <div className="flex justify-evenly mb-2 bg-slate-100 p-2 rounded-lg">
         <div>
-          <h2 className="text-md text-info font-bold">Total Orders: {cart.length}</h2>
+          <h2 className="text-md text-info font-bold">Total Orders: {myCart.length}</h2>
         </div>
         <div>
           <h2 className="text-md text-info font-bold">Grand Total Price: {totalPrice}</h2>
         </div>
-        {cart.length?<Link to="/dashboard/payment">
+        {myCart.length?<Link to="/dashboard/payment">
         <button className="btn btn-info btn-sm">Proceed to Checkout</button>
         </Link>: <button disabled className="btn btn-info btn-sm">Proceed to Checkout</button>}
       </div>
@@ -109,7 +112,7 @@ const handleIncrease = (id) => {
             </tr>
           </thead>
           <tbody>
-            {cart.map((item, idx) => (
+            {myCart.map((item, idx) => (
               <tr key={item._id}>
                 <th>{idx + 1}</th>
                 <td>

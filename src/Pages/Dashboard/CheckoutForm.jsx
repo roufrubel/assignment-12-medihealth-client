@@ -19,7 +19,10 @@ const CheckoutForm = () => {
   const [cart,  ,refetch] = useCart();
   const navigate = useNavigate();
 
-  const totalPriceText = cart
+  const myCart = cart?.filter(myc => myc.buyerEmail === user.email);
+
+
+  const totalPriceText = myCart
     .reduce((total, item) => total + item.price * item.quantity, 0)
     .toFixed(2);
   const totalPrice = parseInt(totalPriceText);
@@ -85,13 +88,13 @@ const CheckoutForm = () => {
         const payment = {
           userName: user.displayName,
           buyerEmail: user.email,
-          sellerEmail: cart.map((item) => item.sellerEmail),
+          sellerEmail: myCart.map((item) => item.sellerEmail),
           price: totalPrice,
           transactionId: paymentIntent.id,
           date: moment().format("DD-MM-YYYY"), // formatted date using moment.js
-          cartIds: cart.map((item) => item._id),
-          medicineItemIds: cart.map((item) => item.medicineId),
-          medicineName: cart.map((item) => item.name),
+          cartIds: myCart.map((item) => item._id),
+          medicineItemIds: myCart.map((item) => item.medicineId),
+          medicineName: myCart.map((item) => item.name),
           status: "pending",
         };
 

@@ -6,12 +6,15 @@ import { TbCategoryPlus, TbReportAnalytics } from "react-icons/tb";
 import { RiAdvertisementFill, RiAdvertisementLine, RiSecurePaymentFill } from "react-icons/ri";
 import useSeller from "../hooks/useSeller";
 import { MdManageHistory } from "react-icons/md";
+import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
+  const {user} = useAuth();
   const [cart] = useCart();
   // get admin value from db
   const [isAdmin] = useAdmin();
   const [isSeller] = useSeller();
+  const myCart = cart?.filter(myc => myc.buyerEmail === user.email);
 
   return (
     <>
@@ -57,7 +60,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to="/dashboard/cart">
-              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({myCart.length})
             </NavLink>
           </li>
             </>
@@ -87,7 +90,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to="/dashboard/cart">
-              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({myCart.length})
             </NavLink>
           </li>
           </>
@@ -108,7 +111,7 @@ const Dashboard = () => {
           
           <li>
             <NavLink to="/dashboard/cart">
-              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({cart.length})
+              <FaCartPlus className="text-xl"></FaCartPlus> My Cart ({myCart.length})
             </NavLink>
           </li>
             </>

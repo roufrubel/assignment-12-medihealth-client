@@ -13,6 +13,8 @@ const Navbar = () => {
   const [isSeller] = useSeller();
   const [cart] = useCart();
 
+  const myCart = cart?.filter(myc => myc.buyerEmail === user.email);
+
   if (loading) {
     <p>Loading...</p>;
   }
@@ -54,7 +56,7 @@ const Navbar = () => {
         <Link to="/dashboard/cart">
           <button className="btn md:btn-xs lg:btn-xs ">
             <FaShoppingCart></FaShoppingCart>
-            <div className="badge badge-info">+{cart.length}</div>
+            <div className="badge badge-info">+{myCart.length}</div>
           </button>
         </Link>
       </li>
