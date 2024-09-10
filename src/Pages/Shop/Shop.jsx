@@ -11,44 +11,45 @@ import Swal from "sweetalert2";
 const Shop = () => {
   const [medicine, loading] = useMedicine();
   const [viewDetails, setViewDetails] = useState(null);
-  // const [selectedMedicine, setSelectedMedicine] = useState(null);
-  const {user} = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
-  const [ , , refetch] = useCart();
-  // console.log(viewDetails)
+  const [, , refetch] = useCart();
 
- 
-  // const openModal = (data) => {
-  //   setSelectedMedicine(data);
-  //   document.getElementById("medihealth-modal").showModal();
-  // };
+  const [filteredMedicine, setFilteredMedicine] = useState([]);
+
+  // Extract search term from the URL query params
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search");
 
   useEffect(() => {
-    if(viewDetails){
-      document.getElementById("medihealth-modal").showModal();
+    // show modal
+         if(viewDetails){
+           document.getElementById("medihealth-modal").showModal();
+         }
+    // Filter the medicines based on the search term
+    if (searchTerm) {
+      const filtered = medicine.filter((med) =>
+        med.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredMedicine(filtered);
+    } else {
+      setFilteredMedicine(medicine); // If no search term, show all medicines
     }
-  }, [viewDetails]);
+  }, [viewDetails, searchTerm, medicine]);
 
+  // closeModal
   const closeModal = () => {
     setViewDetails(null);
     document.getElementById("medihealth-modal").close();
   };
 
-
-  // handle select
   const handleSelect = (viewDetails) => {
-    // Check if selectedMedicine is null or undefined
-  if (!viewDetails) {
-    console.error("No medicine selected.");
-    return;
-  }
+    if (!viewDetails) return;
 
-    if(user && user.email){
-       // destructuring from selectedMedicine
-       const { _id, name, image, price, category, sellerEmail } = viewDetails;
-      // send selected medicine cart to db
+    if (user && user.email) {
+      const { _id, name, image, price, category, sellerEmail } = viewDetails;
       const cartItem = {
         medicineId: _id,
         buyerEmail: user.email,
@@ -57,46 +58,40 @@ const Shop = () => {
         price,
         category,
         sellerEmail,
-        quantity: 1
-      }
-      axiosSecure.post('/carts', cartItem)
-      .then(res => {
-        // console.log(res.data)
-        if(res.data.insertedId || res.data.modifiedCount){
+        quantity: 1,
+      };
+      axiosSecure.post("/carts", cartItem).then((res) => {
+        if (res.data.insertedId || res.data.modifiedCount) {
           Swal.fire({
             position: "top-end",
             icon: "success",
             title: `${name} has been selected`,
             showConfirmButton: false,
-            timer: 1000
+            timer: 1000,
           });
-          // refetch the cart data to update cart count
           refetch();
         }
-      })
-    } else{
+      });
+    } else {
       Swal.fire({
         title: "You are not logged in?",
-        text: "Please login to add the cart !",
+        text: "Please login to add to the cart!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, login"
+        confirmButtonText: "Yes, login",
       }).then((result) => {
         if (result.isConfirmed) {
-          // send user to the login page
-          navigate('/login', {state: {from: location}});
+          navigate("/login", { state: { from: location } });
         }
       });
     }
-  }
-
+  };
 
   if (loading) {
-    <progress className="progress w-56"></progress>;
+    return <progress className="progress w-56"></progress>;
   }
-
 
   return (
     <>
@@ -116,30 +111,42 @@ const Shop = () => {
                 <th>Select</th>
               </tr>
             </thead>
-            <tbody>
-              {medicine.map((data) => (
-                <tr key={data._id}>
-                  <td className="font-bold">{data?.name}</td>
-                  <td><img  className="rounded w-12" src={data.image} alt="medicine image" /></td>
-                  <td>{data?.category}</td>
-                  <td>${data?.price}</td>
 
-                  {/* view */}
+            <tbody>
+              {filteredMedicine.map((data) => (
+                <tr key={data._id}>
+                  <td className="font-bold">{data.name}</td>
                   <td>
-                      <button
-                        className="btn btn-circle btn-sm btn-outline font-bold btn-info"
-                        onClick={() => setViewDetails(data)}
-                      >
-                        <GrView />
-                      </button>
-                    {
-                      viewDetails && (
-                        <dialog
-                      id="medihealth-modal"
-                      className="modal modal-bottom sm:modal-middle"
+                    <img
+                      className="rounded w-12"
+                      src={data.image}
+                      alt="medicine image"
+                    />
+                  </td>
+                  <td>{data.category}</td>
+                  <td>${data.price}</td>
+
+                  {/* View button */}
+                  <td>
+                    <button
+                      className="btn btn-circle btn-sm btn-outline font-bold btn-info"
+                      onClick={() => setViewDetails(data)}
                     >
-                      <div className="modal-box">
-                          <img className="w-1/2" src={viewDetails.image} alt="" />
+                      <GrView />
+                    </button>
+
+                    {/* ----------- view modal -------- */}
+                    {viewDetails && (
+                      <dialog
+                        id="medihealth-modal"
+                        className="modal modal-bottom sm:modal-middle"
+                      >
+                        <div className="modal-box">
+                          <img
+                            className="w-1/2"
+                            src={viewDetails.image}
+                            alt=""
+                          />
                           <h3 className="font-bold text-info text-lg py-2">
                             {viewDetails.name}
                           </h3>
@@ -149,20 +156,20 @@ const Shop = () => {
                             <p>{viewDetails.dosage}</p>
                             <p>${viewDetails.price}</p>
                           </div>
-                          <p>{viewDetails.short_description}</p>
-                        <div className="modal-action">
-                          <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-info absolute right-2 top-2"
-                            onClick={closeModal}
-                            >
-                              ✕
-                            </button>
-                          </form>
+                          <p>{viewDetails.short_description}</p>{" "}
+                          <div className="modal-action">
+                            <form method="dialog">
+                              <button
+                                className="btn btn-sm btn-circle btn-info absolute right-2 top-2"
+                                onClick={closeModal}
+                              >
+                                ✕
+                              </button>
+                            </form>
+                          </div>{" "}
                         </div>
-                      </div>
-                    </dialog>
-                      )
-                    }
+                      </dialog>
+                    )}
                   </td>
 
                   <td>
@@ -184,3 +191,4 @@ const Shop = () => {
 };
 
 export default Shop;
+
