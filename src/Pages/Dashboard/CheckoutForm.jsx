@@ -16,7 +16,7 @@ const CheckoutForm = () => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [cart,  ,refetch] = useCart();
+  const [cart, loading, refetch] = useCart();
   const navigate = useNavigate();
 
   const myCart = cart?.filter(myc => myc.buyerEmail === user.email);
@@ -119,6 +119,11 @@ const CheckoutForm = () => {
       }
     }
   };
+
+
+  if(loading){
+    return <p className="p-4 border-2 border-yellow-500 text-2xl text-center mt-20">Loading...</p>
+  }
 
   return (
     <div className="md:mx-20 md:mt-20 lg:px-10 lg:mt-20 md:p-10 lg:p-10 border rounded-md">
