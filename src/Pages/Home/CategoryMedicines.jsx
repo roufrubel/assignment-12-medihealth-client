@@ -17,9 +17,7 @@ const CategoryMedicines = () => {
   const axiosSecure = useAxiosSecure();
   const [ , , refetch] = useCart();
 
-  if (loading) {
-    return <progress className="progress w-56"></progress>;
-  }
+  
 
   const filteredMedicines = medicine.filter((med) => med.category === category);
 
@@ -87,6 +85,10 @@ const CategoryMedicines = () => {
       });
     }
   };
+
+  if (loading) {
+    return <progress className="progress w-56"></progress>;
+  }
 
   return (
     <>
