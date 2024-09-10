@@ -58,7 +58,7 @@ const ManageMedicines = () => {
   if (loading) {
     <progress className="progress w-56"></progress>;
   }
-  
+
 
   return (
     <>
@@ -77,6 +77,7 @@ const ManageMedicines = () => {
           </button>
         </div>
       </div>
+      
       <dialog id="my_modal_1" className="modal">
         <form onSubmit={handleAddCategoryMedicine} className="modal-box">
           <h3 className="font-bold text-lg text-info mb-3">
@@ -86,14 +87,14 @@ const ManageMedicines = () => {
             className="w-full p-2 rounded-md border-2 mb-2"
             type="text"
             name="category"
-            placeholder="Your category"
+            placeholder="medicine category"
             required
           />
           <input
             className="w-full p-2 rounded-md border-2 mb-2"
             type="text"
             name="name"
-            placeholder="Your name"
+            placeholder="medicine name"
             required
           />
           <input

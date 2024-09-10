@@ -14,24 +14,6 @@ const PaymentHistory = () => {
     payment.sellerEmail.includes(sellerEmail)
   );
 
-  // Calculate the total paid amount for the seller
-  const paidTotal = parseInt(
-    sellerPayments
-      ?.filter(payment => payment.status === 'paid')
-      ?.reduce((sum, payment) => sum + payment.price, 0)
-      ?.toFixed(2)
-  );
-
-  // Calculate the total pending amount for the seller
-  const pendingTotal = parseInt(
-    sellerPayments
-      ?.filter(payment => payment.status === 'pending')
-      ?.reduce((sum, payment) => sum + payment.price, 0)
-      ?.toFixed(2)
-  );
-
-  // Calculate the total revenue (paid + pending)
-  const totalRevenue = parseInt((paidTotal + pendingTotal)?.toFixed(2));
 
   if (loading) {
     return <p>Loading...</p>;
