@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Slider from "./Slider";
 import CategoryCardSection from "./CategoryCardSection";
+import DiscountedProducts from "./DiscountedProducts";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       </Helmet>
       <Slider></Slider>
       <CategoryCardSection></CategoryCardSection>
+      <DiscountedProducts></DiscountedProducts>
     </div>
   );
 };
